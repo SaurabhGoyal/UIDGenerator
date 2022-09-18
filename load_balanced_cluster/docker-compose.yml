@@ -37,3 +37,23 @@ services:
       - ADDR=http://web_instance_3:8765
     depends_on:
       - web_lb_1
+  web_instance_4:
+    build:
+      context: ./node
+    environment:
+      - NODE_ID=4
+      - PORT=8765
+      - LB_IP=http://web_lb_1:8700
+      - ADDR=http://web_instance_4:8765
+    depends_on:
+      - web_lb_1
+  web_instance_5:
+    build:
+      context: ./node
+    environment:
+      - NODE_ID=5
+      - PORT=8765
+      - LB_IP=http://web_lb_1:8700
+      - ADDR=http://web_instance_5:8765
+    depends_on:
+      - web_lb_1
