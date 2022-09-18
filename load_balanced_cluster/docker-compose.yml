@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  web_lb_1:
+    build:
+      context: ./load_balancer
+    ports:
+      - 8700:8700
+    environment:
+      - PORT=8700
+  web_instance_1:
+    build:
+      context: ./node
+    environment:
+      - NODE_ID=1
+      - PORT=8765
+      - LB_IP=http://web_lb_1:8700
+      - ADDR=http://web_instance_1:8765
+    depends_on:
+      - web_lb_1
+  web_instance_2:
+    build:
+      context: ./node
+    environment:
+      - NODE_ID=2
+      - PORT=8765
+      - LB_IP=http://web_lb_1:8700
+      - ADDR=http://web_instance_2:8765
+    depends_on:
+      - web_lb_1
+  web_instance_3:
+    build:
+      context: ./node
+    environment:
+      - NODE_ID=3
+      - PORT=8765
+      - LB_IP=http://web_lb_1:8700
+      - ADDR=http://web_instance_3:8765
+    depends_on:
+      - web_lb_1
